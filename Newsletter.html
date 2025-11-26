@@ -6,28 +6,40 @@
     <link rel="stylesheet" href="styles5.css">
     <title>Portal de Notícias</title>
 </head>
-<body>
+<body class="suporte">
+  <header>
+    <nav>
+      <a class="logo" href="Index.html">News</a>
+      <div class="mobile-menu" aria-label="menu" role="button">
+        <div class="line1"></div>
+        <div class="line2"></div>
+        <div class="line3"></div>
+      </div>
+      <ul class="nav-list">
+        <li><a href="/Index.html">Política</a></li>
+        <li><a href="/Esportes.html">Esportes</a></li>
+        <li><a href="/Tecnologia.html">Tecnologia</a></li>
+        <li><a href="/Saude.html">Saúde</a></li>
+        <li><a href="/Newsletter.html">Newsletter</a></li>
+      </ul>
+    </nav>
+  </header>
 
-     <header>
-        <nav>
-            <a class="logo" href="Index.html">News</a>
-            <div class="mobile-menu">
-                <div class="line1"></div>
-                <div class="line2"></div>
-                <div class="line3"></div>
-            </div>
-            <ul class="nav-list">
-                <li><a href="/Index.html">Política</a></li>
-                 <li><a href="/Esportes.html">Esportes</a></li>
-                <li><a href="/Tecnologia.html">Tecnologia</a></li>
-                <li><a href="/Saude.html">Saúde</a></li>
-                <li><a href="/Newsletter.html">Newsletter</a></li>
-            </ul>
-        </nav>
-    </header>
-    
+  <main class="container">
+    <section class="suporte-section faq">
+      <h2>Quer ficar por dentro?</h2>
+      <p><strong>📌 basta fazer login</strong><br>
+        Você terá acesso a todas as informações do.</p>
+
+      <p><strong>📌 Quais os Benefícios?</strong><br>
+        Você terá acesso a conteúdos exclusivos, atualizações em primeira mão e muito mais.</p>
+
+      <p><strong>📌 É seguro?</strong><br>
+        Sim, nossa plataforma utiliza criptografia para proteger seus dados.</p>
+    </section>
+
     <section class="suporte-section contato">
-      <h2>Fale Conosco</h2>
+      <h2>Cadastre-se aqui!</h2>
       <form action="https://formspree.io/f/xanpjnqz" method="POST">
         <input type="text" name="nome" placeholder="Seu nome" required>
         <input type="email" name="email" placeholder="Seu email" required>
@@ -35,8 +47,24 @@
         <button type="submit">Enviar</button>
       </form>
     </section>
+  </main>
 
+  <footer class="blog-footer">
+    <div class="container">
+      <p>© 2025 Portal News — Portal de Noticias.</p>
+    </div>
+  </footer>
 
-  
+  <!-- pequeno script para ativar menu mobile (mantém behavior simples) -->
+  <script>
+    const mobile = document.querySelector('.mobile-menu');
+    const navList = document.querySelector('.nav-list');
+    if (mobile && navList) {
+      mobile.addEventListener('click', () => {
+        mobile.classList.toggle('active');
+        navList.classList.toggle('active');
+      });
+    }
+  </script>
 </body>
 </html>

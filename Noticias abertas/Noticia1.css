@@ -1,0 +1,14 @@
+:root{--bg:#fbfbfb;--card:#fff;--accent:#2b6fb2;--text:#111;--muted:#6a6f76;--maxw:800px}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);font-family:Arial, Helvetica, sans-serif;color:var(--text)}
+header{padding:12px 18px;background:var(--card)}
+.logo{color:var(--accent);font-weight:700;text-decoration:none}
+.container{max-width:var(--maxw);margin:28px auto;padding:0 16px}
+article{background:var(--card);padding:24px;border-radius:8px}
+.post-thumb{width:100%;border-radius:6px;margin:12px 0}
+.meta{color:var(--muted)}
+.lead{font-weight:600}
+.article-body p{line-height:1.65;margin:10px 0}
+.closing{margin-top:12px;font-weight:700}
+.byline{font-size:.9rem;color:var(--muted)}
+footer{padding:12px;text-align:center}

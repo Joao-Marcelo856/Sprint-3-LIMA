@@ -1,309 +1,147 @@
-/* reset básico */
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
-/* nav/header */
-nav {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background-color: #23232e;
-  padding: 12px 20px;
-  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
-}
-
 .logo {
-  color: #fff;
-  font-size: 20px;
-  text-transform: uppercase;
-  letter-spacing: 3px;
+    font-size: 24px;
+    text-transform: uppercase;
+    letter-spacing: 4px;
 }
 
+/* adicionar variável de altura da navbar e garantir espaço no topo */
+:root {
+    --nav-height: 64px;
+    --bg: #ffffff;
+    --container: 1100px;
+    --text: #14213d;
+    --muted: #667085;
+    --accent: #23232e;
+    --card: #ffffff;
+    --radius: 12px;
+    --shadow: 0 8px 24px rgba(16, 24, 40, 0.06);
+}
+
+/* garante espaço para o conteúdo abaixo da nav */
+html, body {
+    padding-top: var(--nav-height);
+}
+
+/* nav: fixa no topo, mantém cores e família de fonte */
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    background-color: #23232e;
+    height: var(--nav-height);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1100;
+    padding: 0 18px;
+}
+
+/* Bloco de navegação: organização e cores (não alterar cor da fonte) */
 .nav-list {
-  list-style: none;
-  display: flex;
-  gap: 24px;
+    list-style: none;
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    margin: 0;
+    padding: 0;
 }
 
+.nav-list li {
+    letter-spacing: 3px;
+    margin: 0;
+}
+
+/* garantir que os links apareçam corretamente */
 .nav-list li a {
-  color: #fff;
-  text-decoration: none;
+    color: #fff; /* mantém cor atual */
+    text-decoration: none;
+    display: inline-block;
+    padding: 8px 6px;
+    transition: opacity 0.2s ease, transform 0.2s ease;
 }
 
-/* mobile menu lines */
+/* hover sutil sem mudar cor/fonte */
+.nav-list li a:hover {
+    opacity: 0.9;
+    transform: translateY(-2px);
+}
+
+/* mobile menu: linhas e ativação */
 .mobile-menu {
-  display: none;
-  cursor: pointer;
+    display: none;
+    cursor: pointer;
 }
 
 .mobile-menu div {
-  width: 28px;
-  height: 3px;
-  background: #fff;
-  margin: 4px 0;
-  transition: 0.3s;
+    width: 28px;
+    height: 3px;
+    background: #fff;
+    margin: 4px 0;
+    transition: 0.3s;
 }
 
-/* main layout */
-html,
-body {
-  height: 100%;
+/* comportamento mobile: menu full-height deslizando */
+@media (max-width: 999px) {
+    .mobile-menu {
+        display: block;
+    }
+
+    .nav-list {
+        position: fixed;
+        top: var(--nav-height);
+        right: 0;
+        width: 66vw;
+        max-width: 320px;
+        height: calc(100vh - var(--nav-height));
+        background: rgba(35,35,46,0.98);
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+        padding-top: 28px;
+        transform: translateX(100%);
+        transition: transform 0.28s ease-in-out;
+        gap: 14px;
+        box-shadow: -8px 0 24px rgba(0,0,0,0.35);
+    }
+
+    .nav-list li {
+        opacity: 0;
+        transform: translateX(18px);
+        transition: opacity 0.25s ease, transform 0.25s ease;
+        width: 100%;
+        text-align: center;
+    }
+
+    .nav-list.active {
+        transform: translateX(0);
+    }
+
+    .nav-list.active li {
+        opacity: 1;
+        transform: translateX(0);
+    }
 }
 
-body {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-  background: #ffffff;
-  color: #fff;
+/* animação simples para links ao abrir (desktop mantém estável) */
+@keyframes navLinkFade {
+    from {
+        opacity: 0;
+        transform: translateX(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
 }
 
-/* conteúdo principal ocupa espaço */
-main {
-  flex: 1;
-  padding: 24px 16px;
-}
+/* linhas do menu transformadas quando ativo (já existentes) */
+.mobile-menu.active .line1 { transform: rotate(-45deg) translate(-6px, 6px); }
+.mobile-menu.active .line2 { opacity: 0; }
+.mobile-menu.active .line3 { transform: rotate(45deg) translate(-6px, -6px); }
 
-/* CONTENT: carrossel + sinopse lado a lado */
-.content {
-  display: flex;
-  align-items: flex-start;
-  gap: 32px;
-  max-width: 1200px;
-  margin: 0 auto;
-  justify-content: center;
-  flex-wrap: nowrap;
-}
-
-/* ===== CARROSSEL ===== */
-/* Ajuste fixo de dimensão do carrossel — imagens NÃO vão diminuir */
-.carousel {
-  position: relative;
-  width: 700px;
-  /* largura fixa do carrossel (não encolhe) */
-  height: 500px;
-  /* altura fixa do carrossel (não encolhe) */
-  overflow: hidden;
-  border-radius: 10px;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
-  background: #000;
-  flex: 0 0 700px;
-  /* impede encolhimento no layout flex */
-}
-
-/* escondendo os radios visíveis */
-.carousel input[type="radio"] {
-  display: none;
-}
-
-.slides {
-  display: flex;
-  width: calc(700px * 3);
-  /* três slides */
-  height: 100%;
-  transition: transform 0.5s ease-in-out;
-}
-
-/* cada slide tem largura fixa */
-.slide {
-  width: 700px;
-  height: 100%;
-  flex: 0 0 700px;
-}
-
-.slide img {
-  width: 700px;
-  height: 500px;
-  object-fit: cover;
-  display: block;
-}
-
-/* controles via radio */
-#slide1:checked~.slides {
-  transform: translateX(0);
-}
-
-#slide2:checked~.slides {
-  transform: translateX(-700px);
-}
-
-#slide3:checked~.slides {
-  transform: translateX(-1400px);
-}
-
-/* navigation dots */
-.navigation {
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-  bottom: 14px;
-  display: flex;
-  gap: 10px;
-  z-index: 20;
-}
-
-.nav-btn {
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.45);
-  cursor: pointer;
-}
-
-#slide1:checked~.navigation label:nth-child(1),
-#slide2:checked~.navigation label:nth-child(2),
-#slide3:checked~.navigation label:nth-child(3) {
-  background: #fff;
-}
-
-/* arrows */
-.arrows {
-  position: absolute;
-  top: 50%;
-  left: 0;
-  width: 100%;
-  transform: translateY(-50%);
-  z-index: 20;
-  pointer-events: none;
-}
-
-.arrow {
-  position: absolute;
-  background: rgba(0, 0, 0, 0.35);
-  color: #fff;
-  padding: 10px 14px;
-  border-radius: 6px;
-  cursor: pointer;
-  pointer-events: auto;
-  user-select: none;
-  font-size: 22px;
-  transition: background 0.2s;
-}
-
-.arrow:hover {
-  background: rgba(0, 0, 0, 0.6);
-}
-
-.arrow.prev {
-  left: 8px;
-}
-
-.arrow.next {
-  right: 8px;
-}
-
-/* mostrar setas de acordo com slide ativo */
-#slide1:checked~.arrows .next-1,
-#slide2:checked~.arrows .prev-2,
-#slide2:checked~.arrows .next-2,
-#slide3:checked~.arrows .prev-3 {
-  display: block;
-}
-
-.arrows .prev,
-.arrows .next {
-  display: none;
-}
-
-/* ===== DESCRIÇÃO ===== */
-.description {
-  width: 380px;
-  /* largura fixa da coluna de descrição */
-  background: rgba(35, 35, 46, 0.95);
-  padding: 20px 22px;
-  border-radius: 12px;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
-  font-size: 16px;
-  line-height: 1.6;
-  text-align: justify;
-  color: #fff;
-  flex: 0 0 380px;
-}
-
-.description h2 {
-  color: #ffd54a;
-  margin-bottom: 10px;
-}
-
-/* ===== RATING ===== */
-.rating {
-  text-align: center;
-  max-width: 1200px;
-  margin: 28px auto 0 auto;
-}
-
-.rating h3 {
-  color: #fff;
-  margin-bottom: 10px;
-}
-
-.stars span {
-  font-size: 34px;
-  cursor: pointer;
-  color: gray;
-  margin: 0 6px;
-  transition: color .15s;
-}
-
-.stars span.hover,
-.stars span.selected {
-  color: gold;
-}
-
-.rating-value {
-  margin-top: 8px;
-  color: #fff;
-}
-
-/* footer */
-footer {
-  background: #1a1a1d;
-  color: #ddd;
-  text-align: center;
-  padding: 14px 8px;
-}
-
-/* ===== Responsividade ===== */
-/* mobile: como você quer as imagens sem diminuir, vamos permitir scroll horizontal para o bloco .content
-   isso garante que as imagens mantenham dimensão fixa e não sejam comprimidas */
-@media (max-width: 780px) {
-  .content {
-    justify-content: flex-start;
-    gap: 16px;
-    margin: 16px;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    padding-bottom: 12px;
-  }
-
-  .description {
-    flex: 0 0 320px;
-    width: 320px;
-  }
-
-  /* ajuste stars menores */
-  .stars span {
-    font-size: 28px;
-  }
-}
-
-/* pequena regra para esconder scrollbars visualmente só se quiser */
-.content::-webkit-scrollbar {
-  height: 8px;
-}
-
-.content::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.08);
-  border-radius: 8px;
-}
-
-* {
-  margin: 0;
-  padding: 0;
-}
+/*================================================================================================================*/
 
 a {
   color: #fff;
@@ -311,372 +149,68 @@ a {
   transition: 0.3s;
 }
 
-a:hover {
-  opacity: 0.7;
-}
-
-.logo {
-  font-size: 24px;
-  text-transform: uppercase;
-  letter-spacing: 4px;
-}
-
-nav {
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-  background-color: #23232e;
-  height: 8vh;
-}
-
-.nav-list {
-  list-style: none;
-  display: flex;
-}
-
-.nav-list li {
-  letter-spacing: 3px;
-  margin-left: 32px;
-}
-
-.mobile-menu {
-  display: none;
-  cursor: pointer;
-}
-
-.mobile-menu div {
-  width: 32px;
-  height: 2px;
-  background: #fff;
-  margin: 8px;
-  transition: 0.3s;
-}
-
-@media (max-width: 999px) {
-  body {
-    overflow-x: hidden;
-  }
-
-  .nav-list {
-    position: absolute;
-    top: 8vh;
-    right: 0;
-    width: 50vw;
-    height: 92vh;
-    background: #23232e;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-around;
-    transform: translateX(100%);
-    transition: transform 0.3s ease-in;
-  }
-
-  .nav-list li {
-    margin-left: 0;
-    opacity: 0;
-  }
-
-  .mobile-menu {
-    display: block;
-  }
-}
-
-.nav-list.active {
-  transform: translateX(0);
-}
-
-@keyframes navLinkFade {
-  from {
-    opacity: 0;
-    transform: translateX(50px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-
-.mobile-menu.active .line1 {
-  transform: rotate(-45deg) translate(-8px, 8px);
-}
-
-.mobile-menu.active .line2 {
-  opacity: 0;
-}
-
-.mobile-menu.active .line3 {
-  transform: rotate(45deg) translate(-5px, -7px);
-}
-
-
-.rating {
-  text-align: center;
-  margin: 40px auto;
-  font-family: Arial, sans-serif;
-  color: gold;
-}
-
-.rating h3 {
-  margin-bottom: 15px;
-  color: white;
-}
-
-.stars {
-  direction: rtl;
-  /* inverte a ordem visual */
-  display: inline-flex;
-}
-
-.stars input {
-  display: none;
-  /* esconde os radios */
-}
-
-.stars label {
-  font-size: 40px;
-  color: #444;
-  cursor: pointer;
-  transition: color 0.2s;
-}
-
-.stars input:checked~label {
-  color: gold;
-  /* estrelas preenchidas */
-}
-
-.stars label:hover,
-.stars label:hover~label {
-  color: orange;
-  /* efeito hover */
-}
-
-.comments {
-  max-width: 700px;
-  margin: 50px auto;
-  padding: 20px;
-  background: rgba(35, 35, 46, 0.9);
-  border-radius: 12px;
-  color: white;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
-  font-family: Arial, sans-serif;
-}
-
-.botao-prime {
-  background-color: rgb(68, 121, 228);
-  color: #23232e;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 8px;
-  font-weight: bold;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
-
-.comments h3 {
-  margin-bottom: 15px;
-  color: gold;
-  text-align: center;
-}
-
-.comments form {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  margin-bottom: 20px;
-}
-
-.comments textarea {
-  resize: none;
-  min-height: 80px;
-  padding: 10px;
-  border-radius: 8px;
-  border: none;
-  outline: none;
-  font-size: 16px;
-}
-
-.comments button {
-  align-self: flex-end;
-  background: gold;
-  color: #23232e;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 8px;
-  font-weight: bold;
-  cursor: pointer;
-  transition: background 0.3s;
-}
-
-.comments button:hover {
-  background: orange;
-}
-
-.comment-list {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-}
-
-.comment {
-  background: #2e2e3e;
-  padding: 12px 15px;
-  border-radius: 8px;
-  font-size: 15px;
-}
-
-.prime-logo {
-  display: block;
-  margin: 30px auto 10;
-  /* centraliza e adiciona espaço acima */
-  width: 50px;
-  /* tamanho da imagem */
-  height: 50px;
-  /* mantém proporção quadrada */
-  border-radius: 50%;
-  /* deixa totalmente arredondada */
-  object-fit: cover;
-  /* mantém a imagem ajustada dentro do círculo */
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
-  /* opcional: sombra bonita */
-}
-
-.prime-access {
-  display: flex;
-  align-items: center;
-  gap: 15px;
-  /* espaço entre a imagem e o link */
-  margin-top: 20px;
-}
-
-.prime-logo {
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  object-fit: cover;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
-}
-
-.prime-link {
-  color: rgb(127, 102, 102);
-  font-size: 18px;
-  font-weight: bold;
-  text-decoration: none;
-  transition: 0.3s;
-}
-
-.prime-link:hover {
-  color: orange;
-}
-
-.suporte-footer {
-    border-top: 1px solid #eef2f7;
-    padding: 20px 0;
-    margin-top: 24px;
-    color: var(--muted);
-    font-size: 0.95rem
-}
-
 body.suporte {
-      font-family: Arial, sans-serif;
-      background-color: #1c1c28;
-      color: rgb(0, 0, 0);
-      margin: 0;
-      padding: 0;
-    }
+  font-family: Arial, sans-serif;
+  background-color: #ffffff; /* mantido conforme solicitado */
+  color: #000; /* texto principal escuro para legibilidade */
+  margin: 0;
+  padding: 0;
+}
 
-    header.suporte-header {
-      background: #ffffff;
-      padding: 15px;
-      text-align: center;
-    }
 
-    header.suporte-header h1 {
-      color: rgb(255, 255, 255);
-      font-size: 28px;
-      margin: 0;
-    }
+.suporte-section {
+  margin-bottom: 40px;
+  background: rgba(165, 159, 159, 0.9);
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+}
 
-    main.suporte-main {
-      max-width: 900px;
-      margin: 40px auto;
-      padding: 20px;
-    }
+.suporte-section form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
 
-    .suporte-section {
-      margin-bottom: 40px;
-      background: rgba(255, 255, 255, 0.9);
-      padding: 20px;
-      border-radius: 10px;
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
-    }
+.suporte-section input,
+.suporte-section textarea {
+  padding: 10px;
+  border-radius: 6px;
+  border: none;
+  font-size: 16px;
+  outline: none;
+}
 
-    .suporte-section h2 {
-      color: rgb(0, 0, 0);
-      margin-bottom: 15px;
-    }
 
-    .faq p {
-      margin: 8px 0;
-    }
+.suporte-section button {
+  align-self: flex-start;
+  background: rgb(0, 0, 0);
+  color: #ffffff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s;
+}
 
-    .suporte-section form {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
+.suporte-section.contato {
+  margin-top: 20px;
+  bottom: 20px;
+  left: 640px;
+}
 
-    .suporte-section input,
-    .suporte-section textarea {
-      padding: 10px;
-      border-radius: 6px;
-      border: none;
-      font-size: 16px;
-      outline: none;
-    }
+.blog-footer {
+  border-top: 1px solid #eef2f7;
+  padding: 20px 0;
+  margin-top: 24px;
+  color: var(--muted);
+  font-size: 0.95rem
+}
 
-    .suporte-section textarea {
-      resize: none;
-      min-height: 100px;
-    }
+.container {
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: 20px
+}
 
-    .suporte-section button {
-      align-self: flex-start;
-      background: rgb(0, 0, 0);
-      color: #ffffff;
-      padding: 10px 20px;
-      border: none;
-      border-radius: 6px;
-      font-weight: bold;
-      cursor: pointer;
-      transition: 0.3s;
-    }
-
-    .suporte-section button:hover {
-      background: orange;
-    }
-
-    .links a {
-      color: gold;
-      text-decoration: none;
-      transition: 0.2s;
-    }
-
-    .links a:hover {
-      color: orange;
-    }
-
-    .suporte-section.contato {
-        margin-top: 20px;
-        bottom: 20px;
-        left: 640px;
-        padding-left: 43%;
-    }
-
-    .suporte-footer {
-        
-        background: #ffffff;
-        color: rgb(0, 0, 0);
-        font-size: 14px;
-    }
