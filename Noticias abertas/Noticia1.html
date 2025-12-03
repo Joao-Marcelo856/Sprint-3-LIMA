@@ -1,30 +1,96 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width,initial-scale=1">
-	<link rel="stylesheet" href="Noticia1.css">
-	<title>Notícia — Artigo</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Projeto Piloto | Portal News</title>
+	<link rel="stylesheet" href="Styles Pro.css">
 </head>
+
 <body>
-	<header><a href="../Index.html" class="logo">News</a></header>
+	<nav>
+		<a href="../Index.html" class="logo">News Portal</a>
+		<div class="mobile-menu">
+			<div class="line1"></div>
+			<div class="line2"></div>
+			<div class="line3"></div>
+		</div>
+		<ul class="nav-list">
+			<li><a href="/Index.html">Política</a></li>
+			<li><a href="/Esportes.html">Esportes</a></li>
+			<li><a href="/Tecnologia.html">Tecnologia</a></li>
+			<li><a href="/Saude.html">Saúde</a></li>
+			<li><a href="/Newsletter.html">Newsletter</a></li>
+		</ul>
+	</nav>
+	</header>
+
 	<main class="container">
 		<article>
-			<h1>Projeto piloto traz melhorias em serviços públicos locais</h1>
+			<header class="article-header">
+				<span class="tag">Atualidade</span>
+				<h1>Projeto piloto traz melhorias em serviços públicos locais</h1>
+				<p class="lead">Iniciativa municipal de integração digital reduz filas e acelera atendimento em
+					setores-chave.</p>
+				<p class="meta">15 jan 2025 • Por Redação Local</p>
+			</header>
+
 			<img src="../Fotos pro Grid/Imagem 11.webp" alt="Equipe em reunião" class="post-thumb">
-			<p class="meta"><time datetime="2025-01-15">15 jan 2025</time> · Atualidade</p>
 
-			<p class="lead">Iniciativa municipal de integração digital reduz filas e acelera atendimento em setores-chave.</p>
-
-			<section class="article-body">
-				<p>O projeto piloto reúne tecnologia e treinamento de servidores para modernizar processos administrativos, com resultados positivos nos primeiros meses.</p>
-				<p>Moradores relatam atendimento mais rápido e maior transparência nas informações públicas.</p>
-			</section>
-
-			<p class="closing">Próximos passos: expansão para outras regiões e avaliação de custo-benefício.</p>
-			<p class="byline">Autor: Redação Local · Edição: 15/01/2025</p>
+			<div class="article-body">
+				<p>O projeto piloto reúne tecnologia e treinamento de servidores para modernizar processos
+					administrativos, com resultados positivos nos primeiros meses.</p>
+				<p>Moradores relatam atendimento mais rápido e maior transparência nas informações públicas. Os próximos
+					passos envolvem expansão para outras regiões e avaliação de custo-benefício.</p>
+			</div>
 		</article>
 	</main>
-	<footer><a href="../Index.html">Voltar</a></footer>
+
+	<footer>
+		<p>&copy; 2025 News Portal. Todos os direitos reservados.</p>
+		<br><a href="../Index.html">Voltar para Home</a>
+	</footer>
+
+	<script>
+		(function () {
+			const input = document.getElementById('search');
+			const posts = Array.from(document.querySelectorAll('.post-card'));
+			const tagBtns = Array.from(document.querySelectorAll('.tag-btn'));
+			const clearBtn = document.getElementById('clearBtn');
+			let activeTag = 'all';
+
+			function filterPosts() {
+				if (!input) return;
+				const q = (input.value || '').trim().toLowerCase();
+				posts.forEach(post => {
+					const title = (post.dataset.title || '').toLowerCase();
+					const tags = (post.dataset.tags || '').toLowerCase();
+					const matchesQuery = !q || title.includes(q) || tags.includes(q);
+					const matchesTag = activeTag === 'all' || tags.split(',').includes(activeTag);
+					post.style.display = (matchesQuery && matchesTag) ? '' : 'none';
+				});
+			}
+
+			if (input) input.addEventListener('input', filterPosts);
+			if (clearBtn) clearBtn.addEventListener('click', () => {
+				if (!input) return;
+				input.value = '';
+				activeTag = 'all';
+				tagBtns.forEach(b => b.classList.toggle('active', b.dataset.tag === 'all'));
+				filterPosts();
+			});
+
+			tagBtns.forEach(btn => {
+				btn.addEventListener('click', () => {
+					activeTag = btn.dataset.tag;
+					tagBtns.forEach(b => b.classList.toggle('active', b === btn));
+					filterPosts();
+				});
+			});
+		})();
+	</script>
+	<script src="mobile-navbar.js"></script>
 </body>
+
 </html>

@@ -1,16 +1,18 @@
 <!DOCTYPE html>
 <html lang="PT-BR">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styles5.css">
-    <title>Portal de Notícias</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="styles5.css">
+  <title>Portal de Notícias</title>
 </head>
-<body class="suporte">
+
+<body>
   <header>
     <nav>
       <a class="logo" href="Index.html">News</a>
-      <div class="mobile-menu" aria-label="menu" role="button">
+      <div class="mobile-menu">
         <div class="line1"></div>
         <div class="line2"></div>
         <div class="line3"></div>
@@ -55,16 +57,52 @@
     </div>
   </footer>
 
-  <!-- pequeno script para ativar menu mobile (mantém behavior simples) -->
+  <!-- Script leve comentado (mantém consistência com demais páginas) -->
   <script>
-    const mobile = document.querySelector('.mobile-menu');
-    const navList = document.querySelector('.nav-list');
-    if (mobile && navList) {
-      mobile.addEventListener('click', () => {
-        mobile.classList.toggle('active');
-        navList.classList.toggle('active');
+    (function () {
+      // tenta obter elemento de busca; pode ser null nesta página
+      const input = document.getElementById('search');
+      // coleta posts caso existam na página
+      const posts = Array.from(document.querySelectorAll('.post-card'));
+      // coleta botões de tag (se houver)
+      const tagBtns = Array.from(document.querySelectorAll('.tag-btn'));
+      // botão limpar (pode ser null)
+      const clearBtn = document.getElementById('clearBtn');
+      // tag ativa padrão
+      let activeTag = 'all';
+
+      // função de filtro — segura caso elementos não existam
+      function filterPosts() {
+        if (!input) return; // sem input, nada a filtrar
+        const q = (input.value || '').trim().toLowerCase();
+        posts.forEach(post => {
+          const title = (post.dataset.title || '').toLowerCase();
+          const tags = (post.dataset.tags || '').toLowerCase();
+          const matchesQuery = !q || title.includes(q) || tags.includes(q);
+          const matchesTag = activeTag === 'all' || tags.split(',').includes(activeTag);
+          post.style.display = (matchesQuery && matchesTag) ? '' : 'none';
+        });
+      }
+
+      if (input) input.addEventListener('input', filterPosts);
+      if (clearBtn) clearBtn.addEventListener('click', () => {
+        if (!input) return;
+        input.value = '';
+        activeTag = 'all';
+        tagBtns.forEach(b => b.classList.toggle('active', b.dataset.tag === 'all'));
+        filterPosts();
       });
-    }
+
+      tagBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          activeTag = btn.dataset.tag;
+          tagBtns.forEach(b => b.classList.toggle('active', b === btn));
+          filterPosts();
+        });
+      });
+    })();
   </script>
+  <script src="mobile-navbar.js"></script>
 </body>
+
 </html>

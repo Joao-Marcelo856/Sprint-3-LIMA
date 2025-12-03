@@ -1,30 +1,97 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <link rel="stylesheet" href="index-ccj-reforma.css">
-  <title>CCJ aprova texto-base — Artigo</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CCJ Aprova Reforma | Portal News</title>
+  <link rel="stylesheet" href="Styles Pro.css">
 </head>
+
 <body>
-  <header><a href="../Index.html" class="logo">News</a></header>
+  <nav>
+    <a href="../Index.html" class="logo">News Portal</a>
+    <div class="mobile-menu">
+      <div class="line1"></div>
+      <div class="line2"></div>
+      <div class="line3"></div>
+    </div>
+    <ul class="nav-list">
+      <li><a href="/Index.html">Política</a></li>
+      <li><a href="/Esportes.html">Esportes</a></li>
+      <li><a href="/Tecnologia.html">Tecnologia</a></li>
+      <li><a href="/Saude.html">Saúde</a></li>
+      <li><a href="/Newsletter.html">Newsletter</a></li>
+    </ul>
+  </nav>
+  </header>
+
   <main class="container">
     <article>
-      <h1>CCJ do Senado aprova texto-base da reforma tributária</h1>
+      <header class="article-header">
+        <span class="tag">Política</span>
+        <h1>CCJ do Senado aprova texto-base da reforma tributária</h1>
+        <p class="lead">A aprovação na CCJ representa um passo importante, mas o texto ainda passa por ajustes na
+          comissão especial antes do plenário.</p>
+        <p class="meta">20 jan 2025 • Por Agência Legislativa</p>
+      </header>
+
       <img src="../Fotos pro Grid/Imagem 12.webp" alt="Reunião na CCJ" class="post-thumb">
-      <p class="meta"><time datetime="2025-01-20">20 jan 2025</time> · Política</p>
 
-      <p class="lead">A aprovação na CCJ representa um passo importante, mas o texto ainda passa por ajustes na comissão especial antes do plenário.</p>
-
-      <section class="article-body">
-        <p>A deliberação destaca pontos de consenso e divergência entre partidos. Emendas podem alterar regras fiscais propostas originalmente.</p>
-        <p>Observadores indicam que negociações políticas serão determinantes para a aprovação final.</p>
-      </section>
-
-      <p class="closing">Acompanhe a evolução do projeto e como cada mudança pode impactar a arrecadação e serviços públicos.</p>
-      <p class="byline">Autor: Agência Legislativa · Revisão: 20/01/2025</p>
+      <div class="article-body">
+        <p>A deliberação destaca pontos de consenso e divergência entre partidos. Emendas podem alterar regras fiscais
+          propostas originalmente.</p>
+        <p>Observadores indicam que negociações políticas serão determinantes para a aprovação final. Acompanhe a
+          evolução do projeto e como cada mudança pode impactar a arrecadação e serviços públicos.</p>
+      </div>
     </article>
   </main>
-  <footer><a href="../Index.html">Voltar</a></footer>
+
+  <footer>
+    <p>&copy; 2025 News Portal. Todos os direitos reservados.</p>
+    <br><a href="../Index.html">Voltar para Home</a>
+  </footer>
+
+  <script>
+    (function () {
+      const input = document.getElementById('search');
+      const posts = Array.from(document.querySelectorAll('.post-card'));
+      const tagBtns = Array.from(document.querySelectorAll('.tag-btn'));
+      const clearBtn = document.getElementById('clearBtn');
+      let activeTag = 'all';
+
+      function filterPosts() {
+        if (!input) return;
+        const q = (input.value || '').trim().toLowerCase();
+        posts.forEach(post => {
+          const title = (post.dataset.title || '').toLowerCase();
+          const tags = (post.dataset.tags || '').toLowerCase();
+          const matchesQuery = !q || title.includes(q) || tags.includes(q);
+          const matchesTag = activeTag === 'all' || tags.split(',').includes(activeTag);
+          post.style.display = (matchesQuery && matchesTag) ? '' : 'none';
+        });
+      }
+
+      if (input) input.addEventListener('input', filterPosts);
+      if (clearBtn) clearBtn.addEventListener('click', () => {
+        if (!input) return;
+        input.value = '';
+        activeTag = 'all';
+        tagBtns.forEach(b => b.classList.toggle('active', b.dataset.tag === 'all'));
+        filterPosts();
+      });
+
+      tagBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          activeTag = btn.dataset.tag;
+          tagBtns.forEach(b => b.classList.toggle('active', b === btn));
+          filterPosts();
+        });
+      });
+    })();
+  </script>
+
+  <script src="mobile-navbar.js"></script>
 </body>
+
 </html>

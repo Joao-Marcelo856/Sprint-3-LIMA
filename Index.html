@@ -26,7 +26,6 @@
     </header>
 
     
-    </header>
 
   <main class="container">
     <section class="search-area" aria-label="Pesquisar artigos">
@@ -179,48 +178,60 @@
   </footer>
 
   <script>
-    
+    // IIFE: evita poluir o escopo global e executa o código imediatamente
     (function(){
+      // obtém o campo de busca pelo id
       const input = document.getElementById('search');
+      // converte NodeList de .post-card em array para facilitar iteração
       const posts = Array.from(document.querySelectorAll('.post-card'));
+      // coleta botões de tag caso existam (pode ser array vazio)
       const tagBtns = Array.from(document.querySelectorAll('.tag-btn'));
+      // botão para limpar a busca por id
       const clearBtn = document.getElementById('clearBtn');
+      // estado da tag ativa; 'all' significa sem filtro por tag
       let activeTag = 'all';
 
+      // função que aplica o filtro nos posts
       function filterPosts(){
+        // normaliza o valor do input: evita null, remove espaços e deixa minúsculo
         const q = (input.value || '').trim().toLowerCase();
+        // para cada post avalia se deve ser exibido ou ocultado
         posts.forEach(post=>{
-          const title = post.dataset.title.toLowerCase();
-          const tags = post.dataset.tags.toLowerCase();
+          // lê o título do dataset e normaliza para comparação
+          const title = (post.dataset.title || '').toLowerCase();
+          // lê as tags do dataset e normaliza
+          const tags = (post.dataset.tags || '').toLowerCase();
+          // verifica se a query está vazia ou aparece no título/tags
           const matchesQuery = !q || title.includes(q) || tags.includes(q);
+          // verifica se a tag do post corresponde à tag ativa (ou se 'all')
           const matchesTag = activeTag === 'all' || tags.split(',').includes(activeTag);
+          // define display: vazio = mostrado, 'none' = oculto
           post.style.display = (matchesQuery && matchesTag) ? '' : 'none';
         });
       }
 
+      // atualiza o filtro a cada input do usuário
       input.addEventListener('input', filterPosts);
+
+      // limpa campo e reseta filtros quando botão 'Limpar' é clicado
       clearBtn.addEventListener('click', ()=>{
-        input.value = '';
-        activeTag = 'all';
+        input.value = '';                       // limpa texto
+        activeTag = 'all';                      // reseta tag ativa
+        // atualiza estado visual dos botões de tag (se existirem)
         tagBtns.forEach(b=>b.classList.toggle('active', b.dataset.tag==='all'));
-        filterPosts();
+        filterPosts();                          // reaplica filtro (mostra tudo)
       });
 
+      // adiciona clique em cada botão de tag para filtrar por tag
       tagBtns.forEach(btn=>{
         btn.addEventListener('click', ()=>{
-          activeTag = btn.dataset.tag;
-          tagBtns.forEach(b=>b.classList.toggle('active', b===btn));
-          filterPosts();
+          activeTag = btn.dataset.tag;                // define tag ativa
+          tagBtns.forEach(b=>b.classList.toggle('active', b===btn)); // atualiza visual
+          filterPosts();                              // reaplica filtro
         });
       });
     })();
   </script>
-</body>
-</html>
-
-
-
-    <main></main>
-    <script src="mobile-navbar.js"></script>
+  <script src="mobile-navbar.js"></script>
 </body>
 </html>

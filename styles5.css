@@ -4,71 +4,41 @@
     letter-spacing: 4px;
 }
 
-/* adicionar variável de altura da navbar e garantir espaço no topo */
-:root {
-    --nav-height: 64px;
-    --bg: #ffffff;
-    --container: 1100px;
-    --text: #14213d;
-    --muted: #667085;
-    --accent: #23232e;
-    --card: #ffffff;
-    --radius: 12px;
-    --shadow: 0 8px 24px rgba(16, 24, 40, 0.06);
-}
-
-/* garante espaço para o conteúdo abaixo da nav */
-html, body {
-    padding-top: var(--nav-height);
-}
-
-/* nav: fixa no topo, mantém cores e família de fonte */
 nav {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
     background-color: #23232e;
-    height: var(--nav-height);
+    padding: 12px 20px;
+    font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
+    height: var(--nav-height);
     z-index: 1100;
-    padding: 0 18px;
 }
 
-/* Bloco de navegação: organização e cores (não alterar cor da fonte) */
+
 .nav-list {
     list-style: none;
     display: flex;
-    gap: 20px;
-    align-items: center;
+    gap: 24px;
     margin: 0;
     padding: 0;
 }
 
 .nav-list li {
     letter-spacing: 3px;
-    margin: 0;
+    margin-left: 32px;
 }
 
-/* garantir que os links apareçam corretamente */
 .nav-list li a {
-    color: #fff; /* mantém cor atual */
+    color: #fff;
     text-decoration: none;
-    display: inline-block;
     padding: 8px 6px;
-    transition: opacity 0.2s ease, transform 0.2s ease;
 }
 
-/* hover sutil sem mudar cor/fonte */
-.nav-list li a:hover {
-    opacity: 0.9;
-    transform: translateY(-2px);
-}
-
-/* mobile menu: linhas e ativação */
 .mobile-menu {
     display: none;
     cursor: pointer;
@@ -82,135 +52,505 @@ nav {
     transition: 0.3s;
 }
 
-/* comportamento mobile: menu full-height deslizando */
 @media (max-width: 999px) {
-    .mobile-menu {
-        display: block;
+    body {
+        overflow-x: hidden;
     }
 
     .nav-list {
-        position: fixed;
-        top: var(--nav-height);
+        position: absolute;
+        top: 8vh;
         right: 0;
-        width: 66vw;
-        max-width: 320px;
-        height: calc(100vh - var(--nav-height));
-        background: rgba(35,35,46,0.98);
+        width: 50vw;
+        height: 92vh;
+        background: #23232e;
         flex-direction: column;
         align-items: center;
-        justify-content: flex-start;
-        padding-top: 28px;
+        justify-content: space-around;
         transform: translateX(100%);
-        transition: transform 0.28s ease-in-out;
-        gap: 14px;
-        box-shadow: -8px 0 24px rgba(0,0,0,0.35);
+        transition: transform 0.3s ease-in;
     }
 
     .nav-list li {
+        margin-left: 0;
         opacity: 0;
-        transform: translateX(18px);
-        transition: opacity 0.25s ease, transform 0.25s ease;
-        width: 100%;
-        text-align: center;
     }
 
-    .nav-list.active {
-        transform: translateX(0);
-    }
-
-    .nav-list.active li {
-        opacity: 1;
-        transform: translateX(0);
+    .mobile-menu {
+        display: block;
     }
 }
 
-/* animação simples para links ao abrir (desktop mantém estável) */
+
+.nav-list.active {
+    transform: translateX(0);
+}
+
 @keyframes navLinkFade {
     from {
         opacity: 0;
-        transform: translateX(20px);
+        transform: translateX(50px);
     }
+
     to {
         opacity: 1;
         transform: translateX(0);
     }
 }
 
-/* linhas do menu transformadas quando ativo (já existentes) */
-.mobile-menu.active .line1 { transform: rotate(-45deg) translate(-6px, 6px); }
-.mobile-menu.active .line2 { opacity: 0; }
-.mobile-menu.active .line3 { transform: rotate(45deg) translate(-6px, -6px); }
+.mobile-menu.active .line1 {
+    transform: rotate(-45deg) translate(-8px, 8px);
+}
+
+.mobile-menu.active .line2 {
+    opacity: 0;
+}
+
+.mobile-menu.active .line3 {
+    transform: rotate(45deg) translate(-5px, -7px);
+}
+
+
+/* ========================================================================================================*/
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0
+}
+
+:root {
+    --nav-height: 64px;
+    --bg: #ffffff;
+    --container: 1100px;
+    --text: #14213d;
+    --muted: #667085;
+    --accent: #23232e;
+    --card: #ffffff;
+    --radius: 12px;
+    --shadow: 0 8px 24px rgba(16, 24, 40, 0.06);
+}
+
+html,
+body {
+    height: 100%;
+    font-family: Inter, system-ui, -apple-system, 'Segoe UI', Roboto, Arial;
+    background: var(--bg);
+    color: var(--text);
+    -webkit-font-smoothing: antialiased;
+    padding-top: var(--nav-height);
+}
+
+.container {
+    max-width: var(--container);
+    margin: 0 auto;
+    padding: 20px
+}
+
+
+.blog-header {
+    border-bottom: 1px solid #eef2f7;
+    background: transparent;
+}
+
+.header-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 0
+}
+
+.brand {
+    font-weight: 700;
+    color: var(--accent);
+    text-decoration: none;
+    font-size: 1.15rem
+}
+
+.search-area {
+    padding: 20px 0;
+    border-bottom: 1px solid #f3f4f6
+}
+
+.search-row {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    margin-bottom: 12px
+}
+
+#search {
+    flex: 1;
+    padding: 12px 14px;
+    border-radius: 10px;
+    border: 1px solid #e6e9f2;
+    font-size: 1rem;
+    background: #fff
+}
+
+.btn-ghost {
+    padding: 10px 14px;
+    border-radius: 10px;
+    border: 1px solid #e6e9f2;
+    background: #fff;
+    cursor: pointer;
+    color: var(--accent)
+}
+
+.btn-ghost:hover {
+    background: #f8fafc
+}
+
+
+.tags-row {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap
+}
+
+.tag-btn {
+    background: #f3f4f6;
+    border: 1px solid #e6e9f2;
+    padding: 8px 12px;
+    border-radius: 999px;
+    cursor: pointer;
+    color: var(--muted);
+    font-weight: 600
+}
+
+.tag-btn.active {
+    background: linear-gradient(90deg, var(--accent), #23232e);
+    color: #fff;
+    border-color: transparent;
+    box-shadow: var(--shadow)
+}
+
+
+.posts-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 18px;
+    padding: 24px 0
+}
+
+.post-card {
+    background: var(--card);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    display: flex;
+    flex-direction: column;
+    min-height: 220px
+}
+
+.post-thumb {
+    width: 100%;
+    height: 160px;
+    object-fit: cover;
+    display: block
+}
+
+.post-body {
+    padding: 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    flex: 1
+}
+
+.post-title {
+    font-size: 1.05rem;
+    margin: 0;
+    color: var(--accent)
+}
+
+.post-excerpt {
+    color: var(--muted);
+    font-size: 0.95rem;
+    margin: 0
+}
+
+.meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: auto;
+    font-size: 0.9rem;
+    color: var(--muted)
+}
+
+.post-tags span {
+    background: #f3f4f6;
+    padding: 6px 8px;
+    border-radius: 8px;
+    margin-left: 6px;
+    font-size: 0.8rem;
+    color: var(--muted)
+}
+
+
+.blog-footer {
+    border-top: 1px solid #eef2f7;
+    padding: 20px 0;
+    margin-top: 24px;
+    color: var(--muted);
+    font-size: 0.95rem
+}
+
+
+@media (max-width:1000px) {
+    .posts-grid {
+        grid-template-columns: repeat(2, 1fr)
+    }
+}
+
+@media (max-width:680px) {
+    .posts-grid {
+        grid-template-columns: 1fr
+    }
+
+    .search-row {
+        flex-direction: column;
+        align-items: stretch
+    }
+
+    #search {
+        width: 100%
+    }
+
+    .nav-top {
+        display: none
+    }
+}
+
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0
+}
+
+/* general fluid adjustments */
+.container {
+    padding: 16px;
+    max-width: 1200px;
+}
+
+/* search area responsive */
+.search-row {
+    gap: 8px;
+}
+
+#search {
+    font-size: 1rem;
+}
+
+/* small screens */
+@media (max-width:680px) {
+    .header-inner {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+    }
+
+    .search-row {
+        flex-direction: column;
+    }
+
+    #search {
+        width: 100%;
+    }
+
+    .tags-row {
+        justify-content: flex-start;
+    }
+
+    .posts-grid {
+        gap: 12px;
+    }
+}
+
+/* tablets */
+@media (max-width:1000px) {
+    .posts-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .post-thumb {
+        height: 200px;
+    }
+}
+
+/* large desktop / TVs */
+@media (min-width:1600px) {
+    .container {
+        max-width: 1600px;
+        padding: 28px;
+    }
+
+    .posts-grid {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 20px;
+    }
+
+    .post-thumb {
+        height: 220px;
+    }
+}
+
+/* ensure accessibility on very small screens */
+@media (max-width:420px) {
+    .post-thumb {
+        height: 150px;
+    }
+
+    .post-title {
+        font-size: 1rem;
+    }
+
+    .post-excerpt {
+        font-size: 0.9rem;
+    }
+}
+
+/* header responsivo: permite wrap e melhor espaçamento */
+.header-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+/* força container mais fluido em telas grandes */
+.container {
+    padding: 16px;
+    max-width: 1400px;
+}
+
+/* nav-top pode sumir em telas menores para evitar acúmulo na barra */
+@media (max-width:720px) {
+    .nav-top {
+        display: none;
+    }
+
+    .header-inner {
+        gap: 10px;
+    }
+}
+
+/* posts grid já usa auto-fit; garantir limites visuais em tablets e TVs */
+@media (max-width:1000px) {
+    .posts-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 14px;
+    }
+
+    .post-thumb {
+        height: 200px;
+    }
+}
+
+@media (min-width:1600px) {
+    .posts-grid {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 20px;
+    }
+
+    .post-thumb {
+        height: 220px;
+    }
+}
+
+/* nav/menu em mobile — evitar overflow e garantir visual por cima do conteúdo */
+.nav-top,
+.nav {
+    z-index: 1100;
+    /* evita ficar abaixo de dropdowns */
+}
+
 
 /*================================================================================================================*/
 
 a {
-  color: #fff;
-  text-decoration: none;
-  transition: 0.3s;
+    color: #fff;
+    text-decoration: none;
+    transition: 0.3s;
 }
 
 body.suporte {
-  font-family: Arial, sans-serif;
-  background-color: #ffffff; /* mantido conforme solicitado */
-  color: #000; /* texto principal escuro para legibilidade */
-  margin: 0;
-  padding: 0;
+    font-family: Arial, sans-serif;
+    background-color: #ffffff;
+    /* mantido conforme solicitado */
+    color: #000;
+    /* texto principal escuro para legibilidade */
+    margin: 0;
+    padding: 0;
 }
 
 
 .suporte-section {
-  margin-bottom: 40px;
-  background: rgba(165, 159, 159, 0.9);
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+    margin-bottom: 40px;
+    background: rgba(165, 159, 159, 0.9);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
 }
 
 .suporte-section form {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
 }
 
 .suporte-section input,
 .suporte-section textarea {
-  padding: 10px;
-  border-radius: 6px;
-  border: none;
-  font-size: 16px;
-  outline: none;
+    padding: 10px;
+    border-radius: 6px;
+    border: none;
+    font-size: 16px;
+    outline: none;
 }
 
 
 .suporte-section button {
-  align-self: flex-start;
-  background: rgb(0, 0, 0);
-  color: #ffffff;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 6px;
-  font-weight: bold;
-  cursor: pointer;
-  transition: 0.3s;
+    align-self: flex-start;
+    background: rgb(0, 0, 0);
+    color: #ffffff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
 }
 
 .suporte-section.contato {
-  margin-top: 20px;
-  bottom: 20px;
-  left: 640px;
+    margin-top: 20px;
+    bottom: 20px;
+    left: 640px;
 }
 
 .blog-footer {
-  border-top: 1px solid #eef2f7;
-  padding: 20px 0;
-  margin-top: 24px;
-  color: var(--muted);
-  font-size: 0.95rem
+    border-top: 1px solid #eef2f7;
+    padding: 20px 0;
+    margin-top: 24px;
+    color: var(--muted);
+    font-size: 0.95rem
 }
 
 .container {
-  max-width: var(--container);
-  margin: 0 auto;
-  padding: 20px
+    max-width: var(--container);
+    margin: 0 auto;
+    padding: 20px
 }
 
+/* Comentários explicativos para:
+   - estilo do formulário de newsletter (seção .suporte-section)
+   - nav / menu mobile
+   - variáveis e regras gerais do site
+*/

@@ -1,31 +1,101 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <link rel="stylesheet" href="tec-mercado-ti.css">
-  <title>Mercado de TI — Artigo</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mercado de TI | Portal News</title>
+  <link rel="stylesheet" href="Styles Pro.css">
 </head>
+
 <body>
-  <header><a href="../Tecnologia.html" class="logo">News</a></header>
+  <nav>
+    <a href="../Index.html" class="logo">News Portal</a>
+    <div class="mobile-menu">
+      <div class="line1"></div>
+      <div class="line2"></div>
+      <div class="line3"></div>
+    </div>
+    <ul class="nav-list">
+      <li><a href="/Index.html">Política</a></li>
+      <li><a href="/Esportes.html">Esportes</a></li>
+      <li><a href="/Tecnologia.html">Tecnologia</a></li>
+      <li><a href="/Saude.html">Saúde</a></li>
+      <li><a href="/Newsletter.html">Newsletter</a></li>
+    </ul>
+  </nav>
+  </header>
+
   <main class="container">
     <article>
-      <h1>Mercado da tecnologia da informação segue em expansão no Brasil</h1>
+      <header class="article-header">
+        <span class="tag">Mercado</span>
+        <h1>Mercado da tecnologia da informação segue em expansão no Brasil</h1>
+        <p class="lead">Relatório aponta crescimento contínuo do setor de TI, com demanda por desenvolvedores,
+          especialistas em nuvem e segurança cibernética.</p>
+        <p class="meta">05 dez 2024 • Por Equipe InsightTI</p>
+      </header>
+
       <img src="../Fotos Tecnologia Grid/Imagem 25.png" alt="Profissional de TI trabalhando" class="post-thumb">
-      <p class="meta"><time datetime="2024-12-05">5 dez 2024</time> · Tecnologia</p>
 
-      <p class="lead">Relatório aponta crescimento contínuo do setor de TI, com demanda por desenvolvedores, especialistas em nuvem e segurança cibernética.</p>
-
-      <section class="article-body">
-        <p>O mercado brasileiro registra aumento de vagas em serviços digitais, impulsionado por transformação digital em empresas de todos os portes.</p>
-        <p>Áreas de maior procura incluem cloud engineering, desenvolvimento web e automação. Programas de requalificação e cursos técnicos têm sido fundamentais para suprir a demanda.</p>
-        <p>Empresas buscam também habilidades comportamentais como colaboração e pensamento crítico, além de conhecimento técnico.</p>
-      </section>
-
-      <p class="closing">Dica: profissionais que combinam domínio técnico com comunicação e atualização constante têm vantagem.</p>
-      <p class="byline">Autor: Equipe InsightTI · Contato: contato@insightti.ex</p>
+      <div class="article-body">
+        <p>O mercado brasileiro registra aumento de vagas em serviços digitais, impulsionado por transformação digital
+          em empresas de todos os portes.</p>
+        <p>Áreas de maior procura incluem cloud engineering, desenvolvimento web e automação. Programas de
+          requalificação e cursos técnicos têm sido fundamentais para suprir a demanda.</p>
+        <p>Empresas buscam também habilidades comportamentais como colaboração e pensamento crítico, além de
+          conhecimento técnico.</p>
+        <p><strong>Dica:</strong> profissionais que combinam domínio técnico com comunicação e atualização constante têm
+          vantagem.</p>
+      </div>
     </article>
   </main>
-  <footer><a href="../Tecnologia.html">Voltar</a></footer>
+
+  <footer>
+    <p>&copy; 2025 News Portal. Todos os direitos reservados.</p>
+    <br><a href="../Tecnologia.html">Voltar para Tecnologia</a>
+  </footer>
+
+  <script>
+    (function () {
+      const input = document.getElementById('search');
+      const posts = Array.from(document.querySelectorAll('.post-card'));
+      const tagBtns = Array.from(document.querySelectorAll('.tag-btn'));
+      const clearBtn = document.getElementById('clearBtn');
+      let activeTag = 'all';
+
+      function filterPosts() {
+        if (!input) return;
+        const q = (input.value || '').trim().toLowerCase();
+        posts.forEach(post => {
+          const title = (post.dataset.title || '').toLowerCase();
+          const tags = (post.dataset.tags || '').toLowerCase();
+          const matchesQuery = !q || title.includes(q) || tags.includes(q);
+          const matchesTag = activeTag === 'all' || tags.split(',').includes(activeTag);
+          post.style.display = (matchesQuery && matchesTag) ? '' : 'none';
+        });
+      }
+
+      if (input) input.addEventListener('input', filterPosts);
+      if (clearBtn) clearBtn.addEventListener('click', () => {
+        if (!input) return;
+        input.value = '';
+        activeTag = 'all';
+        tagBtns.forEach(b => b.classList.toggle('active', b.dataset.tag === 'all'));
+        filterPosts();
+      });
+
+      tagBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          activeTag = btn.dataset.tag;
+          tagBtns.forEach(b => b.classList.toggle('active', b === btn));
+          filterPosts();
+        });
+      });
+    })();
+  </script>
+
+  <script src="mobile-navbar.js"></script>
 </body>
+
 </html>

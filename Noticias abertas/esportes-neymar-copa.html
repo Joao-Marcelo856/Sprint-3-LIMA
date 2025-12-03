@@ -1,30 +1,111 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <link rel="stylesheet" href="esportes-neymar-copa.css">
-  <title>Neymar e Copa — Artigo</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Neymar e Copa América | Portal News</title>
+  <link rel="stylesheet" href="Styles Pro.css">
 </head>
+
 <body>
-  <header><a href="../Esportes.html" class="logo">News</a></header>
+  <nav>
+    <a href="../Index.html" class="logo">News Portal</a>
+    <div class="mobile-menu">
+      <div class="line1"></div>
+      <div class="line2"></div>
+      <div class="line3"></div>
+    </div>
+    <ul class="nav-list">
+      <li><a href="/Index.html">Política</a></li>
+      <li><a href="/Esportes.html">Esportes</a></li>
+      <li><a href="/Tecnologia.html">Tecnologia</a></li>
+      <li><a href="/Saude.html">Saúde</a></li>
+      <li><a href="/Newsletter.html">Newsletter</a></li>
+    </ul>
+  </nav>
+  </header>
+
   <main class="container">
     <article>
-      <h1>Neymar afirma que pretende jogar a Copa América e Olimpíada</h1>
+      <header class="article-header">
+        <span class="tag">Esportes</span>
+        <h1>Neymar afirma que pretende jogar a Copa América e Olimpíada</h1>
+        <p class="lead">Declaração do atacante anima torcedores e acende discussões sobre calendário e preparação
+          física.</p>
+        <p class="meta">5 dez 2024 • Por Esporte em Pauta</p>
+      </header>
+
       <img src="../Fotos Esportes Grid/Imagem 15.webp" alt="Neymar em entrevista" class="post-thumb">
-      <p class="meta"><time datetime="2024-12-05">5 dez 2024</time> · Esportes</p>
 
-      <p class="lead">Declaração do atacante anima torcedores e acende discussões sobre calendário e preparação física.</p>
-
-      <section class="article-body">
-        <p>Com foco na recuperação física e preparação, a seleção avalia rotação de jogadores para eventos seguidos no calendário internacional.</p>
-        <p>Treinadores ponderam balancear competição de clubes e seleções para preservar performance e saúde dos atletas.</p>
-      </section>
-
-      <p class="closing">A expectativa por confirmações oficiais continua; torcedores seguem atentos ao calendário e convocações.</p>
-      <p class="byline">Autor: Esporte em Pauta · Fonte: Entrevista coletiva</p>
+      <div class="article-body">
+        <p>Com foco na recuperação física e preparação, a seleção avalia rotação de jogadores para eventos seguidos no
+          calendário internacional.</p>
+        <p>Treinadores ponderam balancear competição de clubes e seleções para preservar performance e saúde dos
+          atletas. A expectativa por confirmações oficiais continua; torcedores seguem atentos ao calendário e
+          convocações.</p>
+      </div>
     </article>
   </main>
-  <footer><a href="../Esportes.html">Voltar</a></footer>
+
+  <footer>
+    <p>&copy; 2025 News Portal. Todos os direitos reservados.</p>
+    <br><a href="../Esportes.html">Voltar para Esportes</a>
+  </footer>
+
+  <script>
+    // IIFE: isola variáveis e executa imediatamente
+    (function () {
+      // tenta obter campo de pesquisa (pode não existir em páginas de notícia única)
+      const input = document.getElementById('search');
+      // coleta todos os cards de posts se existirem
+      const posts = Array.from(document.querySelectorAll('.post-card'));
+      // coleta botões de tag (caso existam)
+      const tagBtns = Array.from(document.querySelectorAll('.tag-btn'));
+      // botão 'Limpar' (pode ser null)
+      const clearBtn = document.getElementById('clearBtn');
+      // tag ativa atual; 'all' = sem filtro por tag
+      let activeTag = 'all';
+
+      // função segura de filtro — retorna cedo se não houver input
+      function filterPosts() {
+        if (!input) return; // sem campo de busca, nada a filtrar
+        // normaliza valor digitado
+        const q = (input.value || '').trim().toLowerCase();
+        // aplica verificação para cada post
+        posts.forEach(post => {
+          const title = (post.dataset.title || '').toLowerCase(); // título
+          const tags = (post.dataset.tags || '').toLowerCase();   // tags
+          const matchesQuery = !q || title.includes(q) || tags.includes(q); // corresponde à query?
+          const matchesTag = activeTag === 'all' || tags.split(',').includes(activeTag); // corresponde à tag?
+          // mostra ou oculta segundo ambos os critérios
+          post.style.display = (matchesQuery && matchesTag) ? '' : 'none';
+        });
+      }
+
+      // se input existir, adiciona listener para atualizar em tempo real
+      if (input) input.addEventListener('input', filterPosts);
+      // se botão de limpar existir, adiciona handler para resetar filtros
+      if (clearBtn) clearBtn.addEventListener('click', () => {
+        if (!input) return;          // garante input antes de operar
+        input.value = '';            // limpa texto
+        activeTag = 'all';           // reseta tag
+        tagBtns.forEach(b => b.classList.toggle('active', b.dataset.tag === 'all')); // atualiza visual
+        filterPosts();               // reaplica filtro (mostra tudo)
+      });
+
+      // configura clique em botões de tag (se houverem)
+      tagBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          activeTag = btn.dataset.tag;                   // define tag ativa
+          tagBtns.forEach(b => b.classList.toggle('active', b === btn)); // atualiza destaque
+          filterPosts();                                 // reaplica filtro
+        });
+      });
+    })();
+  </script>
+
+  <script src="mobile-navbar.js"></script>
 </body>
+
 </html>

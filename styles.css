@@ -1,3 +1,17 @@
+/* ===========================
+   comentários: explicam blocos principais de estilos
+   - regras iniciais: reset e variáveis CSS
+   - nav: estilo da barra superior e menu mobile
+   - posts-grid: layout dos cards
+   - responsividade: media queries para diferentes larguras
+   =========================== */
+
+a {
+    color: #fff;
+    text-decoration: none;
+    transition: 0.3s;
+}
+
 .logo {
     font-size: 24px;
     text-transform: uppercase;

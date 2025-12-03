@@ -1,31 +1,102 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <link rel="stylesheet" href="../styles.css">
-  <link rel="stylesheet" href="tec-700k-empregos.css">
-  <title>Tecnologia e empregos — Artigo</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Novas Tecnologias | Portal News</title>
+  <link rel="stylesheet" href="Styles Pro.css">
 </head>
+
 <body>
-  <header><a href="../Index.html" class="logo">News</a></header>
+  <nav>
+    <a href="../Index.html" class="logo">News Portal</a>
+    <div class="mobile-menu">
+      <div class="line1"></div>
+      <div class="line2"></div>
+      <div class="line3"></div>
+    </div>
+    <ul class="nav-list">
+      <li><a href="/Index.html">Política</a></li>
+      <li><a href="/Esportes.html">Esportes</a></li>
+      <li><a href="/Tecnologia.html">Tecnologia</a></li>
+      <li><a href="/Saude.html">Saúde</a></li>
+      <li><a href="/Newsletter.html">Newsletter</a></li>
+    </ul>
+  </nav>
+  </header>
+
   <main class="container">
     <article>
-      <h1>Tecnologia deve criar 700 mil empregos na indústria de transformação em 10 anos</h1>
-      <img src="../Fotos Tecnologia Grid/Imagem 23.jpg" alt="Linha de produção com automação" class="post-thumb">
-      <p class="meta"><time datetime="2025-02-01">1 fev 2025</time> · Tecnologia</p>
+      <header class="article-header">
+        <span class="tag">Inovação</span>
+        <h1>Confira novas tecnologias para ficar de olho</h1>
+        <p class="lead">Do avanço da inteligência artificial a inovações em energia renovável, selecionamos as
+          tecnologias com maior potencial de impacto nos próximos anos.</p>
+        <p class="meta">20 jan 2025 • Por Redação TechNews</p>
+      </header>
 
-      <p class="lead">Um estudo aponta que automação e tecnologias digitais vão impulsionar vagas na indústria, especialmente em manutenção, integração e desenvolvimento.</p>
+      <img src="../Fotos Tecnologia Grid/Imagem 24.jpg" alt="Imagem ilustrativa de novas tecnologias"
+        class="post-thumb">
 
-      <section class="article-body">
-        <p>Embora a automação substitua algumas tarefas, ela também cria demanda por funções qualificadas: operadores de sistemas, engenheiros de integração e especialistas em dados.</p>
-        <p>Políticas de formação e parcerias entre empresas e instituições de ensino serão essenciais para aproveitar esse crescimento com inclusão social.</p>
-      </section>
-
-      <p class="closing">Resumo: oportunidades surgirão para quem investir em habilidades técnicas e aprendizagem contínua.</p>
-      <p class="byline">Autor: Redação IndustrialTech · Fonte: Estudo Setorial 2025</p>
+      <div class="article-body">
+        <p>As aplicações de IA estão se expandindo para setores como saúde, logística e educação. Ferramentas de machine
+          learning deixam de ser experimentos e passam a integrar processos produtivos.</p>
+        <p>Na área de energia, o desenvolvimento de baterias mais eficientes e a integração com redes inteligentes
+          prometem reduzir custos e aumentar a estabilidade do fornecimento.</p>
+        <p>Startups e grandes empresas também investem em tecnologias sustentáveis e em interfaces homem-máquina mais
+          intuitivas, o que deve gerar novas oportunidades de emprego e pesquisa.</p>
+        <p><strong>Conclusão:</strong> acompanhar tendências é essencial para profissionais e consumidores. Invista em
+          aprendizado contínuo e observe prioridades de mercado.</p>
+      </div>
     </article>
   </main>
-  <footer><a href="../Tecnologia.html">Voltar</a></footer>
+
+  <footer>
+    <p>&copy; 2025 News Portal. Todos os direitos reservados.</p>
+    <br><a href="../Tecnologia.html">Voltar para Tecnologia</a>
+  </footer>
+
+  <script>
+    (function () {
+      const input = document.getElementById('search');
+      const posts = Array.from(document.querySelectorAll('.post-card'));
+      const tagBtns = Array.from(document.querySelectorAll('.tag-btn'));
+      const clearBtn = document.getElementById('clearBtn');
+      let activeTag = 'all';
+
+      function filterPosts() {
+        if (!input) return;
+        const q = (input.value || '').trim().toLowerCase();
+        posts.forEach(post => {
+          const title = (post.dataset.title || '').toLowerCase();
+          const tags = (post.dataset.tags || '').toLowerCase();
+          const matchesQuery = !q || title.includes(q) || tags.includes(q);
+          const matchesTag = activeTag === 'all' || tags.split(',').includes(activeTag);
+          post.style.display = (matchesQuery && matchesTag) ? '' : 'none';
+        });
+      }
+
+      if (input) input.addEventListener('input', filterPosts);
+      if (clearBtn) clearBtn.addEventListener('click', () => {
+        if (!input) return;
+        input.value = '';
+        activeTag = 'all';
+        tagBtns.forEach(b => b.classList.toggle('active', b.dataset.tag === 'all'));
+        filterPosts();
+      });
+
+      tagBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          activeTag = btn.dataset.tag;
+          tagBtns.forEach(b => b.classList.toggle('active', b === btn));
+          filterPosts();
+        });
+      });
+    })();
+  </script>
+
+  <script src="mobile-navbar.js"></script>
 </body>
+
 </html>

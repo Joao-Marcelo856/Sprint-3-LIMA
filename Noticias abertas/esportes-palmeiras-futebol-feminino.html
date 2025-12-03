@@ -1,30 +1,107 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <link rel="stylesheet" href="esportes-palmeiras-futebol-feminino.css">
-  <title>Campanha futebol feminino — Artigo</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Palmeiras e Futebol Feminino | Portal News</title>
+
+  <link rel="stylesheet" href="Styles Pro.css">
 </head>
+
 <body>
-  <header><a href="../Esportes.html" class="logo">News</a></header>
+
+  <nav>
+    <a href="../Index.html" class="logo">News Portal</a>
+    <div class="mobile-menu">
+      <div class="line1"></div>
+      <div class="line2"></div>
+      <div class="line3"></div>
+    </div>
+    <ul class="nav-list">
+      <li><a href="/Index.html">Política</a></li>
+      <li><a href="/Esportes.html">Esportes</a></li>
+      <li><a href="/Tecnologia.html">Tecnologia</a></li>
+      <li><a href="/Saude.html">Saúde</a></li>
+      <li><a href="/Newsletter.html">Newsletter</a></li>
+    </ul>
+  </nav>
+  </header>
+
   <main class="container">
     <article>
-      <h1>Palmeiras e Esportes da Sorte lançam campanha em apoio ao futebol feminino</h1>
-      <img src="../Fotos Esportes Grid/Imagem 13.jpg" alt="Jogadoras em campanha" class="post-thumb">
-      <p class="meta"><time datetime="2025-02-01">1 fev 2025</time> · Esportes</p>
+      <header class="article-header">
+        <span class="tag">Futebol Feminino</span>
+        <h1>Palmeiras e Esportes da Sorte lançam campanha em apoio ao futebol feminino</h1>
+        <p class="lead">A iniciativa visa aumentar visibilidade, recursos e estruturas para times femininos em clubes
+          locais e nacionais.</p>
+        <p class="meta">
+          <strong>Por Redação Esportes</strong> • 01 fev 2025
+        </p>
+      </header>
 
-      <p class="lead">A iniciativa visa aumentar visibilidade, recursos e estruturas para times femininos em clubes locais e nacionais.</p>
+      <img src="../Fotos Esportes Grid/Imagem 13.jpg" alt="Jogadoras do Palmeiras em campanha" class="post-thumb">
 
-      <section class="article-body">
-        <p>A campanha foca em patrocínios, melhoria de centros de treinamento e oportunidades para jovens talentos.</p>
-        <p>Representantes do clube destacam investimento contínuo como forma de fortalecer o calendário e os resultados da seleção feminina.</p>
-      </section>
+      <div class="article-body">
+        <p>A campanha foca em patrocínios, melhoria de centros de treinamento e oportunidades para jovens talentos. A
+          parceria promete revolucionar a forma como a base é tratada dentro do clube.</p>
 
-      <p class="closing">Impacto esperado: maior base de atletas e mais público nos estádios, promovendo igualdade de oportunidades.</p>
-      <p class="byline">Autor: Redação Esportes · Fonte: Clube Palmeiras</p>
+        <p>Representantes do clube destacam investimento contínuo como forma de fortalecer o calendário e os
+          resultados da seleção feminina. "Não é apenas sobre dinheiro, é sobre estrutura e respeito profissional",
+          afirmou a diretoria em nota.</p>
+
+        <h3>Impacto esperado</h3>
+        <p>Espera-se uma maior base de atletas e mais público nos estádios, promovendo igualdade de oportunidades a
+          longo prazo.</p>
+      </div>
     </article>
   </main>
-  <footer><a href="../Esportes.html">Voltar</a></footer>
+
+  <footer>
+    <p>&copy; 2025 News Portal. Todos os direitos reservados.</p>
+    <br>
+    <a href="../Esportes.html" style="text-decoration: underline;">Voltar para Esportes</a>
+  </footer>
+
+  <script>
+    (function () {
+      const input = document.getElementById('search');
+      const posts = Array.from(document.querySelectorAll('.post-card'));
+      const tagBtns = Array.from(document.querySelectorAll('.tag-btn'));
+      const clearBtn = document.getElementById('clearBtn');
+      let activeTag = 'all';
+
+      function filterPosts() {
+        if (!input) return;
+        const q = (input.value || '').trim().toLowerCase();
+        posts.forEach(post => {
+          const title = (post.dataset.title || '').toLowerCase();
+          const tags = (post.dataset.tags || '').toLowerCase();
+          const matchesQuery = !q || title.includes(q) || tags.includes(q);
+          const matchesTag = activeTag === 'all' || tags.split(',').includes(activeTag);
+          post.style.display = (matchesQuery && matchesTag) ? '' : 'none';
+        });
+      }
+
+      if (input) input.addEventListener('input', filterPosts);
+      if (clearBtn) clearBtn.addEventListener('click', () => {
+        if (!input) return;
+        input.value = '';
+        activeTag = 'all';
+        tagBtns.forEach(b => b.classList.toggle('active', b.dataset.tag === 'all'));
+        filterPosts();
+      });
+
+      tagBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          activeTag = btn.dataset.tag;
+          tagBtns.forEach(b => b.classList.toggle('active', b === btn));
+          filterPosts();
+        });
+      });
+    })();
+  </script>
+  <script src="mobile-navbar.js"></script>
 </body>
+
 </html>

@@ -180,26 +180,25 @@
   </footer>
 
   <script>
-    
     (function(){
-      const input = document.getElementById('search');
-      const posts = Array.from(document.querySelectorAll('.post-card'));
-      const tagBtns = Array.from(document.querySelectorAll('.tag-btn'));
-      const clearBtn = document.getElementById('clearBtn');
-      let activeTag = 'all';
+      const input = document.getElementById('search'); // campo busca
+      const posts = Array.from(document.querySelectorAll('.post-card')); // posts
+      const tagBtns = Array.from(document.querySelectorAll('.tag-btn')); // botões de tag
+      const clearBtn = document.getElementById('clearBtn'); // limpar
+      let activeTag = 'all'; // tag atual
 
       function filterPosts(){
-        const q = (input.value || '').trim().toLowerCase();
+        const q = (input.value || '').trim().toLowerCase(); // query normalizada
         posts.forEach(post=>{
-          const title = post.dataset.title.toLowerCase();
-          const tags = post.dataset.tags.toLowerCase();
-          const matchesQuery = !q || title.includes(q) || tags.includes(q);
-          const matchesTag = activeTag === 'all' || tags.split(',').includes(activeTag);
-          post.style.display = (matchesQuery && matchesTag) ? '' : 'none';
+          const title = (post.dataset.title || '').toLowerCase(); // título do post
+          const tags = (post.dataset.tags || '').toLowerCase(); // tags do post
+          const matchesQuery = !q || title.includes(q) || tags.includes(q); // checa texto
+          const matchesTag = activeTag === 'all' || tags.split(',').includes(activeTag); // checa tag
+          post.style.display = (matchesQuery && matchesTag) ? '' : 'none'; // exibe/oculta
         });
       }
 
-      input.addEventListener('input', filterPosts);
+      input.addEventListener('input', filterPosts); // ao digitar
       clearBtn.addEventListener('click', ()=>{
         input.value = '';
         activeTag = 'all';
@@ -216,6 +215,7 @@
       });
     })();
   </script>
+  <script src="mobile-navbar.js"></script>
 </body>
 </html>
 

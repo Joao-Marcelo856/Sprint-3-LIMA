@@ -180,26 +180,25 @@
   </footer>
 
   <script>
-    
     (function(){
-      const input = document.getElementById('search');
-      const posts = Array.from(document.querySelectorAll('.post-card'));
-      const tagBtns = Array.from(document.querySelectorAll('.tag-btn'));
-      const clearBtn = document.getElementById('clearBtn');
-      let activeTag = 'all';
+      const input = document.getElementById('search'); // input de busca
+      const posts = Array.from(document.querySelectorAll('.post-card')); // lista de posts
+      const tagBtns = Array.from(document.querySelectorAll('.tag-btn')); // botões de tags
+      const clearBtn = document.getElementById('clearBtn'); // botão limpar
+      let activeTag = 'all'; // tag ativa (padrão)
 
       function filterPosts(){
-        const q = (input.value || '').trim().toLowerCase();
+        const q = (input.value || '').trim().toLowerCase(); // normaliza query
         posts.forEach(post=>{
-          const title = post.dataset.title.toLowerCase();
-          const tags = post.dataset.tags.toLowerCase();
-          const matchesQuery = !q || title.includes(q) || tags.includes(q);
-          const matchesTag = activeTag === 'all' || tags.split(',').includes(activeTag);
-          post.style.display = (matchesQuery && matchesTag) ? '' : 'none';
+          const title = (post.dataset.title || '').toLowerCase(); // título
+          const tags = (post.dataset.tags || '').toLowerCase(); // tags
+          const matchesQuery = !q || title.includes(q) || tags.includes(q); // checa query
+          const matchesTag = activeTag === 'all' || tags.split(',').includes(activeTag); // checa tag
+          post.style.display = (matchesQuery && matchesTag) ? '' : 'none'; // mostra/oculta
         });
       }
 
-      input.addEventListener('input', filterPosts);
+      input.addEventListener('input', filterPosts); // atualiza ao digitar
       clearBtn.addEventListener('click', ()=>{
         input.value = '';
         activeTag = 'all';
@@ -216,12 +215,6 @@
       });
     })();
   </script>
-</body>
-</html>
-
-
-
-    <main></main>
-    <script src="mobile-navbar.js"></script>
+  <script src="mobile-navbar.js"></script>
 </body>
 </html>

@@ -1,3 +1,16 @@
+/* Comentários por bloco:
+   - a: estilo global de links
+   - nav / .nav-list: estrutura e comportamento mobile
+   - posts-grid e .post-card: layout dos artigos
+   - media queries: ajustes responsivos
+*/
+
+a {
+    color: #fff;
+    text-decoration: none;
+    transition: 0.3s;
+}
+
 .logo {
     font-size: 24px;
     text-transform: uppercase;
@@ -6,22 +19,37 @@
 
 nav {
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
     align-items: center;
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
     background-color: #23232e;
-    height: 8vh;
+    padding: 12px 20px;
+    font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: var(--nav-height);
+    z-index: 1100;
 }
 
 
 .nav-list {
     list-style: none;
     display: flex;
+    gap: 24px;
+    margin: 0;
+    padding: 0;
 }
 
 .nav-list li {
     letter-spacing: 3px;
     margin-left: 32px;
+}
+
+.nav-list li a {
+    color: #fff;
+    text-decoration: none;
+    padding: 8px 6px;
 }
 
 .mobile-menu {
@@ -30,10 +58,10 @@ nav {
 }
 
 .mobile-menu div {
-    width: 32px;
-    height: 2px;
+    width: 28px;
+    height: 3px;
     background: #fff;
-    margin: 8px;
+    margin: 4px 0;
     transition: 0.3s;
 }
 
@@ -105,6 +133,7 @@ nav {
 }
 
 :root {
+    --nav-height: 64px;
     --bg: #ffffff;
     --container: 1100px;
     --text: #14213d;
@@ -121,7 +150,8 @@ body {
     font-family: Inter, system-ui, -apple-system, 'Segoe UI', Roboto, Arial;
     background: var(--bg);
     color: var(--text);
-    -webkit-font-smoothing: antialiased
+    -webkit-font-smoothing: antialiased;
+    padding-top: var(--nav-height);
 }
 
 .container {
@@ -454,46 +484,4 @@ body {
 .nav {
     z-index: 1100;
     /* evita ficar abaixo de dropdowns */
-}
-
-/* nav/header */
-nav {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background-color: #23232e;
-  padding: 12px 20px;
-  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
-}
-
-.logo {
-  color: #fff;
-  font-size: 20px;
-  text-transform: uppercase;
-  letter-spacing: 3px;
-}
-
-.nav-list {
-  list-style: none;
-  display: flex;
-  gap: 24px;
-}
-
-.nav-list li a {
-  color: #fff;
-  text-decoration: none;
-}
-
-/* mobile menu lines */
-.mobile-menu {
-  display: none;
-  cursor: pointer;
-}
-
-.mobile-menu div {
-  width: 28px;
-  height: 3px;
-  background: #fff;
-  margin: 4px 0;
-  transition: 0.3s;
 }
